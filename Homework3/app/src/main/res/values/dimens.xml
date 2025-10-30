@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_button_bottom">16dp</dimen>
+
+    <dimen name="text_field_height">120dp</dimen>
+    <dimen name="note_item_elevation">2dp</dimen>
+    <dimen name="notes_empty_padding">32dp</dimen>
+</resources>
