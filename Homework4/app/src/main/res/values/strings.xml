@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Homework4</string>
+
+    <string name="settings_tab">Settings</string>
+    <string name="edit_tab">Edit</string>
+    <string name="messages_tab">Messages</string>
+
+    <string name="notification_title">Notification Title</string>
+    <string name="title_required">Title is required</string>
+    <string name="notification_message">Notification Message (optional)</string>
+    <string name="expand_notification">Expand notification</string>
+    <string name="open_on_click">Open app on click</string>
+    <string name="add_reply_action">Add reply action</string>
+    <string name="priority">Priority</string>
+    <string name="create_notification">Create Notification</string>
+
+    <string name="min_priority">Minimum</string>
+    <string name="low_priority">Low</string>
+    <string name="medium_priority">Medium</string>
+    <string name="high_priority">High</string>
+
+    <string name="notification_id">Notification ID</string>
+    <string name="new_message">New Message</string>
+    <string name="update_notification">Update Notification</string>
+    <string name="dismiss_all">Dismiss All Notifications</string>
+    <string name="notification_updated">Notification updated</string>
+    <string name="notification_not_found">Notification not found</string>
+    <string name="no_notifications">No notifications to dismiss</string>
+    <string name="enter_id_placeholder">Enter notification ID</string>
+
+    <string name="enter_message">Enter your message</string>
+    <string name="send">Send</string>
+    <string name="no_messages">No messages yet</string>
+
+    <string name="reply">Reply</string>
+    <string name="reply_hint">Type your reply here</string>
+
+    <string name="channel_name">Notifications Channel</string>
+    <string name="channel_description">Channel for all notifications</string>
+
+    <string name="intent_extra_title">title</string>
+    <string name="intent_extra_message">message</string>
+
+    <string name="reply_prefix">Reply:</string>
+    <string name="notification_prefix">Notification:</string>
+
+    <string name="updated_notification_title">Updated Notification</string>
+
+    <string name="time_format">HH:mm:ss</string>
+</resources>
