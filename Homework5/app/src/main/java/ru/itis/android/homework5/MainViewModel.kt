@@ -6,7 +6,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -80,16 +79,14 @@ class MainViewModel : ViewModel() {
         }
         cancelledCoroutinesCount = 0
 
+        currentJobs = if (state.isSequential) {
+            launchSequentialCoroutines(count, state.selectedDispatcher, state.isLazy)
+        } else {
+            launchParallelCoroutines(count, state.selectedDispatcher, state.isLazy)
+        }
+
         viewModelScope.launch {
-            val jobs = if (state.isSequential) {
-                launchSequentialCoroutines(count, state.selectedDispatcher, state.isLazy)
-            } else {
-                launchParallelCoroutines(count, state.selectedDispatcher, state.isLazy)
-            }
-
-            currentJobs = jobs
-            jobs.joinAll()
-
+            currentJobs.joinAll()
             _uiState.update {
                 it.copy(
                     isRunning = false,
@@ -101,33 +98,58 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    private suspend fun launchSequentialCoroutines(
+    private fun launchSequentialCoroutines(
         count: Int,
         dispatcher: DispatcherType,
         isLazy: Boolean
     ): List<Job> {
         val jobs = mutableListOf<Job>()
 
-        val supervisor = SupervisorJob()
-
-        for (i in 0 until count) {
-            val job = viewModelScope.launch(
-                context = getDispatcher(dispatcher) + supervisor,
-                start = if (isLazy) CoroutineStart.LAZY else CoroutineStart.DEFAULT
-            ) {
-                executeHeavyOperation(i)
-                _uiState.update { state ->
-                    state.copy(completedCoroutines = state.completedCoroutines + 1)
+        val sequentialJob = viewModelScope.launch(getDispatcher(dispatcher)) {
+            for (i in 0 until count) {
+                val job = launch(
+                    context = getDispatcher(dispatcher),
+                    start = if (isLazy) CoroutineStart.LAZY else CoroutineStart.DEFAULT
+                ) {
+                    try {
+                        executeHeavyOperation(i)
+                        _uiState.update { state ->
+                            state.copy(completedCoroutines = state.completedCoroutines + 1)
+                        }
+                    } catch (e: ToastException) {
+                        _toastMessage.emit(e.message ?: "Operation took too long!")
+                        _uiState.update { state ->
+                            state.copy(completedCoroutines = state.completedCoroutines + 1)
+                        }
+                    } catch (e: SnackbarException) {
+                        _snackbarMessage.emit(e.message ?: "Operation timeout!")
+                        _uiState.update { state ->
+                            state.copy(completedCoroutines = state.completedCoroutines + 1)
+                        }
+                    } catch (e: ResetException) {
+                        resetToDefaultSettings()
+                        _toastMessage.emit(e.message ?: "Reset required!")
+                        _uiState.update { state ->
+                            state.copy(completedCoroutines = state.completedCoroutines + 1)
+                        }
+                    } catch (e: Exception) {
+                        _toastMessage.emit("Unexpected error: ${e.message}")
+                        _uiState.update { state ->
+                            state.copy(completedCoroutines = state.completedCoroutines + 1)
+                        }
+                    }
                 }
+
+                if (isLazy) {
+                    job.start()
+                }
+
+                jobs.add(job)
+                job.join()
             }
-            if (isLazy) {
-                job.start()
-            }
-            jobs.add(job)
-            job.join()
         }
 
-        supervisor.complete()
+        jobs.add(sequentialJob)
         return jobs
     }
 
@@ -143,9 +165,32 @@ class MainViewModel : ViewModel() {
                 context = getDispatcher(dispatcher),
                 start = if (isLazy) CoroutineStart.LAZY else CoroutineStart.DEFAULT
             ) {
-                executeHeavyOperation(i)
-                _uiState.update { state ->
-                    state.copy(completedCoroutines = state.completedCoroutines + 1)
+                try {
+                    executeHeavyOperation(i)
+                    _uiState.update { state ->
+                        state.copy(completedCoroutines = state.completedCoroutines + 1)
+                    }
+                } catch (e: ToastException) {
+                    _toastMessage.emit(e.message ?: "Operation took too long!")
+                    _uiState.update { state ->
+                        state.copy(completedCoroutines = state.completedCoroutines + 1)
+                    }
+                } catch (e: SnackbarException) {
+                    _snackbarMessage.emit(e.message ?: "Operation timeout!")
+                    _uiState.update { state ->
+                        state.copy(completedCoroutines = state.completedCoroutines + 1)
+                    }
+                } catch (e: ResetException) {
+                    resetToDefaultSettings()
+                    _toastMessage.emit(e.message ?: "Reset required!")
+                    _uiState.update { state ->
+                        state.copy(completedCoroutines = state.completedCoroutines + 1)
+                    }
+                } catch (e: Exception) {
+                    _toastMessage.emit("Unexpected error: ${e.message}")
+                    _uiState.update { state ->
+                        state.copy(completedCoroutines = state.completedCoroutines + 1)
+                    }
                 }
             }
 
@@ -165,19 +210,16 @@ class MainViewModel : ViewModel() {
 
         if (delayTime >= Constants.LONG_OPERATION_THRESHOLD &&
             (1..100).random() <= Constants.EXCEPTION_CHANCE) {
-            handleRandomException()
+            throwRandomException()
         }
     }
 
-    private suspend fun handleRandomException() {
+    private fun throwRandomException() {
         val exceptionType = (0..2).random()
         when (exceptionType) {
-            0 -> _toastMessage.emit(CoroutineExceptionType.ToastException.messageRes.toString())
-            1 -> _snackbarMessage.emit(CoroutineExceptionType.SnackbarException.messageRes.toString())
-            2 -> {
-                resetToDefaultSettings()
-                _toastMessage.emit(CoroutineExceptionType.ResetException.messageRes.toString())
-            }
+            0 -> throw ToastException()
+            1 -> throw SnackbarException()
+            2 -> throw ResetException()
         }
     }
 

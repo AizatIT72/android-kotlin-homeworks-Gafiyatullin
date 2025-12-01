@@ -18,10 +18,16 @@ enum class DispatcherType(val displayNameRes: Int) {
     Main(R.string.dispatchers_main)
 }
 
-sealed class CoroutineExceptionType(val messageRes: Int) {
-    object ToastException : CoroutineExceptionType(R.string.exception_toast)
-    object SnackbarException : CoroutineExceptionType(R.string.exception_snackbar)
-    object ResetException : CoroutineExceptionType(R.string.exception_reset)
+class ToastException : Exception() {
+    override val message: String = "Operation took too long! Showing Toast."
+}
+
+class SnackbarException : Exception() {
+    override val message: String = "Operation timeout! Showing Snackbar."
+}
+
+class ResetException : Exception() {
+    override val message: String = "Reset required due to long operation."
 }
 
 sealed class MainEvent {
