@@ -1,0 +1,109 @@
+<resources>
+    <string name="app_name">Homework6</string>
+
+    <string name="restore_account_warning">В течение 7 дней вы сможете восстановить аккаунт при следующем входе.</string>
+
+    <!-- Movie Card -->
+    <string name="placeholder_image_url">https://via.placeholder.com/100x150</string>
+    <string name="ellipsis">…</string>
+    <string name="empty_string"></string>
+    <string name="rating_format">%1$.1f/10</string>
+    <string name="duration_format">%d мин</string>
+
+    <!-- Общие -->
+    <string name="loading">Загрузка...</string>
+    <string name="error">Ошибка</string>
+    <string name="retry">Повторить</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+    <string name="edit">Редактировать</string>
+    <string name="search">Поиск</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="back">Назад</string>
+    <string name="continue_btn">Продолжить</string>
+
+    <!-- Экран авторизации -->
+    <string name="login_title">Вход</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="login_button">Войти</string>
+    <string name="register_link">Нет аккаунта? Зарегистрируйтесь</string>
+    <string name="login_error">Неверный email или пароль</string>
+    <string name="email_required">Email обязателен</string>
+    <string name="password_required">Пароль обязателен</string>
+    <string name="network_error">Ошибка сети</string>
+    <string name="fill_all_fields">Заполните все поля</string>
+
+    <!-- Экран регистрации -->
+    <string name="register_title">Регистрация</string>
+    <string name="full_name">Полное имя</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="register_button">Зарегистрироваться</string>
+    <string name="login_link">Уже есть аккаунт? Войдите</string>
+    <string name="name_required">Имя обязательно</string>
+    <string name="passwords_mismatch">Пароли не совпадают</string>
+    <string name="email_invalid">Неверный формат email</string>
+    <string name="user_exists">Пользователь уже существует</string>
+    <string name="registration_error">Ошибка регистрации</string>
+
+    <!-- Главный экран -->
+    <string name="home_title">Фильмы</string>
+    <string name="add_movie">Добавить фильм</string>
+    <string name="empty_movies_list">Нет фильмов. Добавьте первый!</string>
+    <string name="sort">Сортировка</string>
+    <string name="profile">Профиль</string>
+    <string name="movies_load_error">Ошибка загрузки фильмов</string>
+
+    <!-- Сортировка -->
+    <string name="sort_by_date">По дате добавления</string>
+    <string name="sort_by_title">По названию</string>
+    <string name="sort_by_rating">По рейтингу</string>
+    <string name="sort_by_year">По году выпуска</string>
+
+    <!-- Экран добавления фильма -->
+    <string name="add_movie_title">Добавить фильм</string>
+    <string name="movie_title">Название фильма</string>
+    <string name="movie_description">Описание</string>
+    <string name="movie_year">Год выпуска</string>
+    <string name="movie_genre">Жанр</string>
+    <string name="movie_duration">Продолжительность (минуты)</string>
+    <string name="movie_rating">Рейтинг (0-10)</string>
+    <string name="movie_poster_url">Ссылка на постер</string>
+    <string name="title_required">Название обязательно</string>
+    <string name="year_required">Год обязателен</string>
+    <string name="rating_required">Рейтинг обязателен</string>
+    <string name="rating_invalid">Рейтинг должен быть от 0 до 10</string>
+    <string name="year_range_error">Год должен быть между 1900 и 2100</string>
+    <string name="year_number_error">Год должен быть числом</string>
+    <string name="rating_number_error">Рейтинг должен быть числом</string>
+
+    <!-- Экран профиля -->
+    <string name="profile_title">Профиль</string>
+    <string name="logout">Выйти</string>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="account_deleted">Аккаунт удален</string>
+    <string name="movies_count">Фильмов в коллекции: %d</string>
+    <string name="member_since">Участник с: %s</string>
+    <string name="user_not_found">Пользователь не найден</string>
+    <string name="profile_load_error">Ошибка загрузки профиля</string>
+    <string name="confirm_logout">Вы уверены, что хотите выйти?</string>
+    <string name="confirm_logout_message">Вы действительно хотите выйти из аккаунта?</string>
+    <string name="confirm_delete_account">Удаление аккаунта</string>
+    <string name="confirm_delete_account_message">Вы уверены, что хотите удалить аккаунт? Вы сможете восстановить его в течение 7 дней.</string>
+
+    <!-- Экран восстановления -->
+    <string name="restore_account_title">Восстановление аккаунта</string>
+    <string name="account_deleted_message">Ваш аккаунт был удален. Вы можете восстановить его или удалить окончательно.</string>
+    <string name="restore_account_button">Восстановить аккаунт</string>
+    <string name="delete_permanently_button">Удалить окончательно</string>
+    <string name="days_ago">%d дней назад</string>
+
+    <!-- Валидация -->
+    <string name="field_required">Поле обязательно</string>
+    <string name="password_length_error">Пароль должен быть не менее 6 символов</string>
+
+    <string name="restore_account_period_message">У вас есть 7 дней на восстановление аккаунта. После этого он будет удалён окончательно.</string>
+</resources>
