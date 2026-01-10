@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Homework5</string>
+
+    <string name="coroutines_controller">Coroutines Controller</string>
+    <string name="number_of_coroutines">Number of coroutines: %d</string>
+    <string name="dispatcher">Dispatcher</string>
+
+    <string name="sequential_launch">Sequential launch</string>
+    <string name="parallel_launch">Parallel launch</string>
+    <string name="lazy_launch">Lazy launch</string>
+
+    <string name="launch_coroutines">Launch Coroutines</string>
+    <string name="cancel_coroutines">Cancel Coroutines</string>
+
+
+    <string name="progress">Progress: %d/%d</string>
+
+    <string name="dispatchers_default">Dispatchers.Default</string>
+    <string name="dispatchers_io">Dispatchers.IO</string>
+    <string name="dispatchers_main">Dispatchers.Main</string>
+
+    <string name="exception_toast">Operation took too long! Showing Toast.</string>
+    <string name="exception_snackbar">Operation timeout! Showing Snackbar.</string>
+    <string name="exception_reset">Reset required due to long operation.</string>
+    <string name="cancelled_coroutines">Cancelled %d coroutines</string>
+</resources>
