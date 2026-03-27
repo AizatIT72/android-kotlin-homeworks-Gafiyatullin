@@ -1,0 +1,134 @@
+package ru.itis.android.homework7.presentation.weather
+
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import ru.itis.android.homework7.di.AppDependencies
+import ru.itis.android.homework7.domain.model.Weather
+import ru.itis.android.homework7.domain.usecase.GetWeatherUseCase
+
+private const val KEY_CITY = "weather_city"
+
+class WeatherViewModel(
+    private val getWeatherUseCase: GetWeatherUseCase,
+    private val savedStateHandle: SavedStateHandle,
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(WeatherUiState())
+    val uiState: StateFlow<WeatherUiState> = _uiState.asStateFlow()
+
+    init {
+        val savedCity = savedStateHandle.get<String>(KEY_CITY).orEmpty()
+        if (savedCity.isNotBlank()) {
+            _uiState.update { it.copy(cityInput = savedCity) }
+            fetchWeather(savedCity)
+        }
+    }
+
+    fun onCityInputChanged(value: String) {
+        savedStateHandle[KEY_CITY] = value
+        _uiState.update { it.copy(cityInput = value, error = null) }
+    }
+
+    fun onGetWeatherClicked() {
+        fetchWeather(_uiState.value.cityInput)
+    }
+
+    private fun fetchWeather(city: String) {
+        if (city.isBlank()) {
+            _uiState.update { it.copy(error = WeatherError.EmptyCity) }
+            return
+        }
+
+        _uiState.update { it.copy(isLoading = true, error = null) }
+
+        viewModelScope.launch {
+            getWeatherUseCase(city)
+                .onSuccess { (weather, isFromCache) ->
+                    _uiState.update {
+                        it.copy(
+                            weather = weather,
+                            isLoading = false,
+                            cacheToast = isFromCache
+                        )
+                    }
+                }
+                .onFailure { t ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = mapThrowableToError(t)
+                        )
+                    }
+                }
+        }
+    }
+
+
+    fun onCacheToastConsumed() {
+        _uiState.update { it.copy(cacheToast = null) }
+    }
+
+    private fun mapThrowableToError(throwable: Throwable): WeatherError {
+        return when (throwable) {
+            is java.net.UnknownHostException -> WeatherError.Network
+            is retrofit2.HttpException -> {
+                val code = throwable.code()
+                if (code == 404) {
+                    WeatherError.CityNotFound
+                } else {
+                    WeatherError.Server(code.toString())
+                }
+            }
+            else -> WeatherError.Unknown
+        }
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                WeatherViewModel(
+                    getWeatherUseCase = AppDependencies.provideGetWeatherUseCase(),
+                    savedStateHandle = createSavedStateHandle(),
+                )
+            }
+        }
+    }
+}
+
+data class WeatherUiState(
+    val cityInput: String = "",
+    val isLoading: Boolean = false,
+    val weather: Weather? = null,
+    val error: WeatherError? = null,
+    val cacheToast: Boolean? = null,
+)
+
+sealed interface WeatherError {
+    data object EmptyCity : WeatherError
+    data object Network : WeatherError
+    data object CityNotFound : WeatherError
+    data class Server(val code: String) : WeatherError
+    data object Unknown : WeatherError
+}
+
+private fun Throwable.toWeatherError(): WeatherError {
+    val msg = message.orEmpty()
+    return when {
+        this is java.net.UnknownHostException ||
+                this is java.net.ConnectException ||
+                this is java.net.SocketTimeoutException -> WeatherError.Network
+        msg.contains("404") -> WeatherError.CityNotFound
+        msg.contains("HTTP") -> WeatherError.Server(msg)
+        else -> WeatherError.Unknown
+    }
+}
