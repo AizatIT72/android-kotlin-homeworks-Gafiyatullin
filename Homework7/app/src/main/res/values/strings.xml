@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Homework7</string>
+
+    <!-- Search / Input -->
+    <string name="search_city_hint">Enter city name…</string>
+    <string name="search_city_label">City</string>
+    <string name="button_get_weather">Get Weather</string>
+    <string name="screen_title">Weather</string>
+
+    <!-- Weather info labels -->
+    <string name="label_feels_like">Feels like</string>
+    <string name="label_humidity">Humidity</string>
+    <string name="label_wind_speed">Wind speed</string>
+    <string name="label_pressure">Pressure</string>
+    <string name="label_visibility">Visibility</string>
+    <string name="label_sunrise">Sunrise</string>
+    <string name="label_sunset">Sunset</string>
+    <string name="label_min_max">Min / Max</string>
+
+    <!-- Units -->
+    <string name="unit_celsius">°C</string>
+    <string name="unit_percent">%</string>
+    <string name="unit_wind">m/s</string>
+    <string name="unit_pressure">hPa</string>
+    <string name="unit_km">km</string>
+
+    <!-- Errors -->
+    <string name="error_empty_city">Please enter a city name.</string>
+    <string name="error_network">Network error. Check your connection.</string>
+    <string name="error_city_not_found">City not found. Try another name.</string>
+    <string name="error_server">Server error: %1$s</string>
+    <string name="error_unknown">An unexpected error occurred.</string>
+
+    <!-- Cache toasts -->
+    <string name="toast_from_cache">Data loaded from cache</string>
+    <string name="toast_from_network">Data loaded from network</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_weather_icon">Weather condition icon</string>
+    <string name="cd_search_icon">Search</string>
+    <string name="cd_humidity_icon">Humidity icon</string>
+    <string name="cd_wind_icon">Wind icon</string>
+    <string name="cd_thermometer_icon">Temperature icon</string>
+</resources>
