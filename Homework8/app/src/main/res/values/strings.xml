@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Homework7</string>
+
+    <!-- Weather screen -->
+    <string name="screen_title">Weather</string>
+    <string name="search_city_label">City</string>
+    <string name="search_city_hint">Enter a city name to see the weather</string>
+    <string name="button_get_weather">Get</string>
+    <string name="toast_from_cache">Loaded from cache</string>
+    <string name="toast_from_network">Loaded from network</string>
+
+    <string name="error_empty_city">Please enter a city name</string>
+    <string name="error_network">Network error. Check your connection.</string>
+    <string name="error_city_not_found">City not found</string>
+    <string name="error_server">Server error: %s</string>
+    <string name="error_unknown">Unknown error. Try again.</string>
+
+    <string name="label_humidity">Humidity</string>
+    <string name="label_wind_speed">Wind</string>
+    <string name="label_pressure">Pressure</string>
+    <string name="label_visibility">Visibility</string>
+    <string name="unit_percent">%%</string>
+    <string name="unit_wind">m/s</string>
+    <string name="unit_pressure">hPa</string>
+    <string name="unit_km">km</string>
+    <string name="unit_celsius">°C</string>
+
+    <string name="cd_humidity_icon">Humidity icon</string>
+    <string name="cd_wind_icon">Wind icon</string>
+    <string name="cd_thermometer_icon">Thermometer icon</string>
+
+    <!-- Details screen -->
+    <string name="button_open_details">Open details</string>
+    <string name="details_title">Details: %1$s</string>
+    <string name="button_retry">Retry</string>
+    <string name="details_passed_via_di">Argument passed via DI</string>
+    <string name="details_city_arg">city = \"%1$s\" (injected through SavedStateHandle by Hilt at runtime)</string>
+    <string name="recent_searches">Recent searches</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Welcome to Homework7!</string>
+    <string name="onboarding_subtitle">A small app for checking the current weather in any city.</string>
+    <string name="onboarding_feature_search_title">Search by city</string>
+    <string name="onboarding_feature_search_desc">Find the current weather for any city in the world.</string>
+    <string name="onboarding_feature_details_title">Details screen</string>
+    <string name="onboarding_feature_details_desc">Tap a result to see full weather details on a separate screen.</string>
+    <string name="onboarding_feature_push_title">Push notifications</string>
+    <string name="onboarding_feature_push_desc">Get promo, auth and informational notifications.</string>
+    <string name="onboarding_dismiss">Got it</string>
+
+    <!-- Notifications -->
+    <string name="notif_channel_default">General</string>
+    <string name="channel_promo">Promotions</string>
+    <string name="channel_auth">Authentication</string>
+    <string name="channel_info">Information</string>
+    <string name="notif_default_title">Homework7</string>
+    <string name="notif_default_body">New notification</string>
+    <string name="notif_promo_default_title">Special offer</string>
+    <string name="notif_auth_default_title">Auth event</string>
+</resources>
